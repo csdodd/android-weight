@@ -52,4 +52,10 @@
         app:np_value="100"
         app:np_wheelItemCount="5"/>
 
+    <Button
+        android:id="@+id/add_reading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+"/>
+
 </LinearLayout>
