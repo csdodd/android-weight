@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal">
+
+    <net.colindodd.weight.views.custom.NumberPicker
+        android:id="@+id/pick_kg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/windowBackground"
+        app:np_width="64dp"
+        app:np_height="180dp"
+        app:np_dividerColor="@color/icons"
+        app:np_formatter="%02d"
+        app:np_max="500"
+        app:np_min="0"
+        app:np_selectedTextColor="@color/contrastText"
+        app:np_textColor="@color/primaryText"
+        app:np_dividerDistance="35dp"
+        app:np_textSize="20sp"
+        app:np_typeface="sans-serif-light"
+        app:np_value="100"
+        app:np_wheelItemCount="5"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/contrastText"
+        android:textSize="30sp"
+        android:layout_gravity="center_vertical"
+        android:text=" · "/>
+
+    <net.colindodd.weight.views.custom.NumberPicker
+        android:id="@+id/pick_g"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/windowBackground"
+        app:np_width="64dp"
+        app:np_height="180dp"
+        app:np_dividerColor="@color/icons"
+        app:np_formatter="%01d"
+        app:np_max="9"
+        app:np_min="1"
+        app:np_selectedTextColor="@color/contrastText"
+        app:np_textColor="@color/primaryText"
+        app:np_dividerDistance="35dp"
+        app:np_textSize="20sp"
+        app:np_typeface="sans-serif-light"
+        app:np_value="100"
+        app:np_wheelItemCount="5"/>
+
+</LinearLayout>
