@@ -2,60 +2,83 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_horizontal"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
-    <net.colindodd.weight.views.custom.NumberPicker
-        android:id="@+id/pick_kg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/windowBackground"
-        app:np_width="64dp"
-        app:np_height="180dp"
-        app:np_dividerColor="@color/icons"
-        app:np_formatter="%02d"
-        app:np_max="500"
-        app:np_min="0"
-        app:np_selectedTextColor="@color/contrastText"
-        app:np_textColor="@color/primaryText"
-        app:np_dividerDistance="35dp"
-        app:np_textSize="20sp"
-        app:np_typeface="sans-serif-light"
-        app:np_value="100"
-        app:np_wheelItemCount="5"/>
+    <com.robinhood.spark.SparkView
+        android:id="@+id/sparkview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:spark_lineColor="@color/contrastText"
+        app:spark_cornerRadius="5dp"
+        app:spark_scrubEnabled="true"
+        app:spark_animateChanges="true"/>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/contrastText"
-        android:textSize="30sp"
-        android:layout_gravity="center_vertical"
-        android:text=" · "/>
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
 
-    <net.colindodd.weight.views.custom.NumberPicker
-        android:id="@+id/pick_g"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/windowBackground"
-        app:np_width="64dp"
-        app:np_height="180dp"
-        app:np_dividerColor="@color/icons"
-        app:np_formatter="%01d"
-        app:np_max="9"
-        app:np_min="1"
-        app:np_selectedTextColor="@color/contrastText"
-        app:np_textColor="@color/primaryText"
-        app:np_dividerDistance="35dp"
-        app:np_textSize="20sp"
-        app:np_typeface="sans-serif-light"
-        app:np_value="100"
-        app:np_wheelItemCount="5"/>
+        <net.colindodd.weight.views.custom.NumberPicker
+            android:id="@+id/pick_kg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/windowBackground"
+            app:np_width="64dp"
+            app:np_height="180dp"
+            app:np_dividerColor="@color/icons"
+            app:np_formatter="%02d"
+            app:np_max="500"
+            app:np_min="0"
+            app:np_selectedTextColor="@color/contrastText"
+            app:np_textColor="@color/primaryText"
+            app:np_dividerDistance="35dp"
+            app:np_textSize="20sp"
+            app:np_typeface="sans-serif-light"
+            app:np_value="100"
+            app:np_wheelItemCount="5"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/contrastText"
+            android:textSize="30sp"
+            android:layout_gravity="center_vertical"
+            android:text=" · "/>
+
+        <net.colindodd.weight.views.custom.NumberPicker
+            android:id="@+id/pick_g"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/windowBackground"
+            app:np_width="64dp"
+            app:np_height="180dp"
+            app:np_dividerColor="@color/icons"
+            app:np_formatter="%01d"
+            app:np_max="9"
+            app:np_min="1"
+            app:np_selectedTextColor="@color/contrastText"
+            app:np_textColor="@color/primaryText"
+            app:np_dividerDistance="35dp"
+            app:np_textSize="20sp"
+            app:np_typeface="sans-serif-light"
+            app:np_value="100"
+            app:np_wheelItemCount="5"/>
+
+    </LinearLayout>
 
     <Button
         android:id="@+id/add_reading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:text="+"/>
+
+    <android.support.v4.widget.Space
+        android:layout_width="0dp"
+        android:layout_height="16dp" />
+
 
 </LinearLayout>

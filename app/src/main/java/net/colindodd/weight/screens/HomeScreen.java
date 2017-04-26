@@ -12,6 +12,10 @@ import net.colindodd.weight.model.Weight;
 import net.colindodd.weight.model.WeightDao;
 import net.colindodd.weight.views.HomeView;
 
+import org.greenrobot.greendao.query.Query;
+
+import java.util.List;
+
 public class HomeScreen extends Screen<HomeView> {
 
     private ReadingDao readingDao;
@@ -20,7 +24,9 @@ public class HomeScreen extends Screen<HomeView> {
     @Override
     protected HomeView createView(Context context) {
         initDb();
-        return new HomeView(context);
+        final HomeView view = new HomeView(context);
+        view.renderReadings(getReadings());
+        return view;
     }
 
     private void initDb() {
@@ -39,5 +45,16 @@ public class HomeScreen extends Screen<HomeView> {
         reading.setTimestamp(System.currentTimeMillis());
         reading.setWeight(weight);
         readingDao.insert(reading);
+
+        getView().renderReadings(getReadings());
+    }
+
+    private List<Reading> getReadings() {
+        final Query readingsQuery =
+                this.readingDao
+                .queryBuilder()
+                .orderAsc(ReadingDao.Properties.Timestamp)
+                .build();
+        return readingsQuery.list();
     }
 }

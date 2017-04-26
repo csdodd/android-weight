@@ -2,13 +2,17 @@ package net.colindodd.weight.views;
 
 import android.content.Context;
 import android.view.View;
-import android.widget.Button;
 
+import com.robinhood.spark.SparkView;
 import com.shawnlin.numberpicker.NumberPicker;
 import com.wealthfront.magellan.BaseScreenView;
 
 import net.colindodd.weight.R;
+import net.colindodd.weight.adapter.ReadingAdapter;
+import net.colindodd.weight.model.Reading;
 import net.colindodd.weight.screens.HomeScreen;
+
+import java.util.List;
 
 public class HomeView extends BaseScreenView<HomeScreen> {
 
@@ -16,6 +20,10 @@ public class HomeView extends BaseScreenView<HomeScreen> {
         super(context);
         inflate(getContext(), R.layout.screen_home, this);
 
+        initView();
+    }
+
+    private void initView() {
         findViewById(R.id.add_reading).setOnClickListener(this.handleAddReadingClicked);
     }
 
@@ -27,4 +35,9 @@ public class HomeView extends BaseScreenView<HomeScreen> {
             getScreen().addReading(kg, g);
         }
     };
+
+    public void renderReadings(final List<Reading> readings) {
+        final ReadingAdapter adapter = new ReadingAdapter(readings);
+        ((SparkView)findViewById(R.id.sparkview)).setAdapter(adapter);
+    }
 }

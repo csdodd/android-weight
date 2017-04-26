@@ -38,4 +38,8 @@ public class Weight {
     public void setG(int g) {
         this.g = g;
     }
+
+    public float getInGrams() {
+        return (this.g * 100) + (this.kg * 1000);
+    }
 }

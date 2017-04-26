@@ -26,7 +26,8 @@ dependencies {
             'com.wealthfront:magellan:1.0.0',
             'com.wealthfront:magellan-support:1.0.0',
             'com.shawnlin:number-picker:2.4.3',
-            'org.greenrobot:greendao:3.2.2'
+            'org.greenrobot:greendao:3.2.2',
+            'com.robinhood.spark:spark:1.1.2'
     )
 
     androidTestCompile(
