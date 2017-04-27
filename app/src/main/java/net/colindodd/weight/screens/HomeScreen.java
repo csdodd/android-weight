@@ -41,10 +41,9 @@ public class HomeScreen extends Screen<HomeView> {
         weight.setG(g);
         weightDao.insert(weight);
 
-        final Reading reading = new Reading();
-        reading.setTimestamp(System.currentTimeMillis());
+        final Reading reading = new Reading().generateTimestamp();
         reading.setWeight(weight);
-        readingDao.insert(reading);
+        readingDao.insertOrReplace(reading);
 
         getView().renderReadings(getReadings());
     }

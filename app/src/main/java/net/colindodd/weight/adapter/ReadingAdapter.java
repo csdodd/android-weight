@@ -12,6 +12,11 @@ public class ReadingAdapter extends SparkAdapter {
 
     public ReadingAdapter(final List<Reading> readings) {
         this.readings = readings;
+
+        // Hack to make something render on day 1
+        if (this.readings.size() == 1) {
+            this.readings.add(this.readings.get(0));
+        }
     }
 
     @Override

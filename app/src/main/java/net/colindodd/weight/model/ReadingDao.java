@@ -25,9 +25,8 @@ public class ReadingDao extends AbstractDao<Reading, Long> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property Timestamp = new Property(1, long.class, "timestamp", false, "TIMESTAMP");
-        public final static Property WeightId = new Property(2, Long.class, "weightId", false, "WEIGHT_ID");
+        public final static Property Timestamp = new Property(0, long.class, "timestamp", true, "_id");
+        public final static Property WeightId = new Property(1, Long.class, "weightId", false, "WEIGHT_ID");
     }
 
     private DaoSession daoSession;
@@ -46,9 +45,8 @@ public class ReadingDao extends AbstractDao<Reading, Long> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"READING\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "\"TIMESTAMP\" INTEGER NOT NULL ," + // 1: timestamp
-                "\"WEIGHT_ID\" INTEGER);"); // 2: weightId
+                "\"_id\" INTEGER PRIMARY KEY NOT NULL ," + // 0: timestamp
+                "\"WEIGHT_ID\" INTEGER NOT NULL );"); // 1: weightId
     }
 
     /** Drops the underlying database table. */
@@ -60,33 +58,15 @@ public class ReadingDao extends AbstractDao<Reading, Long> {
     @Override
     protected final void bindValues(DatabaseStatement stmt, Reading entity) {
         stmt.clearBindings();
- 
-        Long id = entity.getId();
-        if (id != null) {
-            stmt.bindLong(1, id);
-        }
-        stmt.bindLong(2, entity.getTimestamp());
- 
-        Long weightId = entity.getWeightId();
-        if (weightId != null) {
-            stmt.bindLong(3, weightId);
-        }
+        stmt.bindLong(1, entity.getTimestamp());
+        stmt.bindLong(2, entity.getWeightId());
     }
 
     @Override
     protected final void bindValues(SQLiteStatement stmt, Reading entity) {
         stmt.clearBindings();
- 
-        Long id = entity.getId();
-        if (id != null) {
-            stmt.bindLong(1, id);
-        }
-        stmt.bindLong(2, entity.getTimestamp());
- 
-        Long weightId = entity.getWeightId();
-        if (weightId != null) {
-            stmt.bindLong(3, weightId);
-        }
+        stmt.bindLong(1, entity.getTimestamp());
+        stmt.bindLong(2, entity.getWeightId());
     }
 
     @Override
@@ -97,36 +77,34 @@ public class ReadingDao extends AbstractDao<Reading, Long> {
 
     @Override
     public Long readKey(Cursor cursor, int offset) {
-        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
+        return cursor.getLong(offset + 0);
     }    
 
     @Override
     public Reading readEntity(Cursor cursor, int offset) {
         Reading entity = new Reading( //
-            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.getLong(offset + 1), // timestamp
-            cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2) // weightId
+            cursor.getLong(offset + 0), // timestamp
+            cursor.getLong(offset + 1) // weightId
         );
         return entity;
     }
      
     @Override
     public void readEntity(Cursor cursor, Reading entity, int offset) {
-        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setTimestamp(cursor.getLong(offset + 1));
-        entity.setWeightId(cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2));
+        entity.setTimestamp(cursor.getLong(offset + 0));
+        entity.setWeightId(cursor.getLong(offset + 1));
      }
     
     @Override
     protected final Long updateKeyAfterInsert(Reading entity, long rowId) {
-        entity.setId(rowId);
+        entity.setTimestamp(rowId);
         return rowId;
     }
     
     @Override
     public Long getKey(Reading entity) {
         if(entity != null) {
-            return entity.getId();
+            return entity.getTimestamp();
         } else {
             return null;
         }
@@ -134,7 +112,7 @@ public class ReadingDao extends AbstractDao<Reading, Long> {
 
     @Override
     public boolean hasKey(Reading entity) {
-        return entity.getId() != null;
+        throw new UnsupportedOperationException("Unsupported for entities with a non-null key");
     }
 
     @Override
@@ -163,7 +141,9 @@ public class ReadingDao extends AbstractDao<Reading, Long> {
         int offset = getAllColumns().length;
 
         Weight weight = loadCurrentOther(daoSession.getWeightDao(), cursor, offset);
-        entity.setWeight(weight);
+         if(weight != null) {
+            entity.setWeight(weight);
+        }
 
         return entity;    
     }

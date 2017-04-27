@@ -1,17 +1,21 @@
 package net.colindodd.weight.model;
 
-import org.greenrobot.greendao.annotation.Entity;
-import org.greenrobot.greendao.annotation.Id;
-import org.greenrobot.greendao.annotation.ToOne;
-import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.DaoException;
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.NotNull;
+import org.greenrobot.greendao.annotation.ToOne;
+
+import java.util.Calendar;
 
 @Entity
 public class Reading {
 
-    @Id(autoincrement = true)
-    private Long id;
+    @Id
     private long timestamp;
+
+    @NotNull
     private Long weightId;
 
     @ToOne(joinProperty = "weightId")
@@ -23,9 +27,8 @@ public class Reading {
     @Generated(hash = 1387097782)
     private transient ReadingDao myDao;
 
-    @Generated(hash = 534106808)
-    public Reading(Long id, long timestamp, Long weightId) {
-        this.id = id;
+    @Generated(hash = 1298356021)
+    public Reading(long timestamp, @NotNull Long weightId) {
         this.timestamp = timestamp;
         this.weightId = weightId;
     }
@@ -34,12 +37,14 @@ public class Reading {
     public Reading() {
     }
 
-    public Long getId() {
-        return this.id;
-    }
+    public Reading generateTimestamp() {
+        final Calendar calendar = Calendar.getInstance();
+        final int year = calendar.get(Calendar.YEAR);
+        final int day = calendar.get(Calendar.DAY_OF_YEAR);
 
-    public void setId(Long id) {
-        this.id = id;
+        final long timestamp = (year * 365) + day;
+        setTimestamp(timestamp);
+        return this;
     }
 
     public long getTimestamp() {
@@ -81,11 +86,15 @@ public class Reading {
     }
 
     /** called by internal mechanisms, do not call yourself. */
-    @Generated(hash = 1519855403)
-    public void setWeight(Weight weight) {
+    @Generated(hash = 1620813245)
+    public void setWeight(@NotNull Weight weight) {
+        if (weight == null) {
+            throw new DaoException(
+                    "To-one property 'weightId' has not-null constraint; cannot set to-one to null");
+        }
         synchronized (this) {
             this.weight = weight;
-            weightId = weight == null ? null : weight.getId();
+            weightId = weight.getId();
             weight__resolvedKey = weightId;
         }
     }
